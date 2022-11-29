@@ -12,7 +12,9 @@ if __name__ == "__main__":
     episode_file_paths = util.files_in_directory(transcripts_path, '**/episode *.txt', recursive=True)
 
     # define necessary regex
-    tyrion_pattern = re.compile('tyrion*.+:')
+    tyrion_pattern = re.compile('((?i)\btyrion\b).*(\:?)') 
+
+    person_before_tyrion_pattern = re.compile('\: [^\n]*\n*((?i)\btyrion\b).*(\:)')
 
     # read and process episodes
     for episode_file in episode_file_paths:
