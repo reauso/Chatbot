@@ -11,16 +11,16 @@ if __name__ == "__main__":
     # get all episode file paths
     episode_file_paths = util.files_in_directory(transcripts_path, '**/episode *.txt', recursive=True)
 
-    # define necessary regex
-    tyrion_pattern = re.compile('tyrion*.+:')
+    # define necessary values
+    question_answer_pattern = r'(?i): ([^\n]*\n*)\btyrion\b.*:(.*)'
+    question_answer_pairs = []
 
     # read and process episodes
     for episode_file in episode_file_paths:
         episode = open(episode_file, 'r', encoding='utf8')
-        episode_lines = episode.readlines()
+        episode_content = episode.read()
 
-        for line, line_content in enumerate(episode_lines):
-            if re.match(tyrion_pattern, line_content.lower()):
-                print('{}, {}, line: {}, content: {}'.format(path.basename(path.dirname(episode_file)),
-                                                             path.splitext(path.basename(episode_file))[0], line,
-                                                             line_content[:-1]))
+        question_answer_pairs.extend(re.findall(question_answer_pattern, episode_content))
+
+    print(question_answer_pairs[:10])
+    print(len(question_answer_pairs))
