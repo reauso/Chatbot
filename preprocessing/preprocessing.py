@@ -19,7 +19,7 @@ if __name__ == "__main__":
         episode_file_paths = util.files_in_directory(transcripts_path, '**/episode *.txt', recursive=True)
 
         # define necessary values
-        question_answer_pattern = r'(?i): ([^\n]*\n*)\btyrion\b.*:(.*)'
+        question_answer_pattern = r'(?i)\: ([^\n]*\n*)\btyrion\b(?: lannister)?\:(.*)'
         question_answer_pairs = []
 
         # read and process episodes
