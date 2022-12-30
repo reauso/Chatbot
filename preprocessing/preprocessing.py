@@ -1,33 +1,33 @@
 import os
-import os.path as path
 import re
+import pandas as pd
 
 import util
 
 if __name__ == "__main__":
-    import os
-    import os.path as path
-    import re
+    data_path = os.path.join(os.getcwd(), 'Data')
+    transcripts_path = os.path.join(data_path, 'GotTranscripts')
+    csv_path = os.path.join(data_path, 'qa_got.csv')
 
-    import util
+    # get all episode file paths
+    episode_file_paths = util.files_in_directory(transcripts_path, '**/episode *.txt', recursive=True)
 
-    if __name__ == "__main__":
-        os.chdir(path.dirname(path.dirname(path.realpath(__file__))))
-        transcripts_path = path.join(os.getcwd(), 'Data', 'Transcripts')
+    # define necessary values
+    question_answer_pattern = r'(?i)\: ([^\n]*\n*)\btyrion\b(?: lannister)?\:(.*)'
+    question_answer_pairs = pd.DataFrame({'question': [], 'answer': []})
 
-        # get all episode file paths
-        episode_file_paths = util.files_in_directory(transcripts_path, '**/episode *.txt', recursive=True)
+    # read and process episodes
+    for episode_file in episode_file_paths:
+        episode = open(episode_file, 'r', encoding='utf8')
+        episode_content = episode.read()
+        qa_tuples = re.findall(question_answer_pattern, episode_content)
+        qa_tuples = [(pair[0].replace('\n', ''), pair[1].replace('\n', '')) for pair in qa_tuples]
 
-        # define necessary values
-        question_answer_pattern = r'(?i)\: ([^\n]*\n*)\btyrion\b(?: lannister)?\:(.*)'
-        question_answer_pairs = []
+        for pair in qa_tuples:
+            qa_series = pd.DataFrame({'question': [pair[0]], 'answer': [pair[1]]})
+            question_answer_pairs = pd.concat([question_answer_pairs, qa_series], ignore_index=True)
 
-        # read and process episodes
-        for episode_file in episode_file_paths:
-            episode = open(episode_file, 'r', encoding='utf8')
-            episode_content = episode.read()
+    question_answer_pairs.to_csv(csv_path, index=False)
 
-            question_answer_pairs.extend(re.findall(question_answer_pattern, episode_content))
-
-        print(question_answer_pairs[:10])
-        print(len(question_answer_pairs))
+    print(question_answer_pairs[:10])
+    print(len(question_answer_pairs))
