@@ -3,39 +3,42 @@ import os
 import numpy as np
 import pandas as pd
 import spacy
-from tqdm import tqdm
 
 
-def keep_token(token):
-    return token.is_alpha and not token.is_stop
+class SpacyChatbot:
+    def __init__(
+            self,
+            csv_path=os.path.join(os.getcwd(), 'Data', 'qa_got.csv'),
+            vector_path=os.path.join(os.getcwd(), 'Data', 'question_vectors.npy'),
+            spacy_model='en_core_web_lg'
+    ):
+        self.csv_path = csv_path
+        self.vector_path = vector_path
+        self.nlp = spacy.load(spacy_model)
+
+        self.qa_pairs = pd.read_csv(csv_path)
+        self.question_vectors = np.load(vector_path)
+
+    def __call__(self, request):
+        request_doc = self.nlp(request)
+        request_vector = request_doc.vector
+
+        similarities = self.database_cosine_similarities(request_vector)
+        best_index = np.argmax(similarities)
+
+        return self.qa_pairs.loc[best_index, 'answer']
+
+    def database_cosine_similarities(self, request_vector):
+        return np.dot(self.question_vectors, request_vector) / (
+                    np.linalg.norm(self.question_vectors, axis=1) * np.linalg.norm(request_vector))
 
 
 if __name__ == "__main__":
-    csv_path = os.path.join(os.getcwd(), 'Data', 'qa_got.csv')
-    qa_pairs = pd.read_csv(csv_path)
-
-    nlp = spacy.load("en_core_web_lg")
-
-    question_vectors = np.zeros((len(qa_pairs), 300))
-    question_docs = []
-    for i, question in enumerate(tqdm(qa_pairs.question)):
-        doc = nlp(question)
-        question_vectors[i][:] = doc.vector[:]
-        question_docs.append(doc)
-
+    import time
+    spacy_model = SpacyChatbot()
+    start = time.time()
     example_question = 'Did you hear the king’s in Winterfell?'
-    example_doc = nlp(example_question)
-    example_vector = example_doc.vector
+    end = time.time()
 
-    similarity = np.dot(question_vectors, example_vector) / (np.linalg.norm(question_vectors, axis=1) * np.linalg.norm(example_vector))
-    best_index = np.argmax(similarity)
-
-    print(similarity)
-    print(similarity.shape)
-    print(best_index)
-    print(similarity[best_index])
-    print(qa_pairs.loc[best_index, 'question'])
-    print(qa_pairs.loc[best_index, 'answer'])
-
-
-
+    print(spacy_model(example_question))
+    print('Seconds needed: {}'.format(end - start))
