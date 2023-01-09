@@ -27,7 +27,7 @@ if __name__ == "__main__":
     example_doc = nlp(example_question)
     example_vector = example_doc.vector
 
-    similarity = np.dot(question_vectors, example_vector) / (np.linalg.norm(question_vectors) * np.linalg.norm(example_vector))
+    similarity = np.dot(question_vectors, example_vector) / (np.linalg.norm(question_vectors, axis=1) * np.linalg.norm(example_vector))
     best_index = np.argmax(similarity)
 
     print(similarity)
