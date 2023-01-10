@@ -14,6 +14,8 @@ class SpacyChatbot:
     ):
         self.csv_path = csv_path
         self.vector_path = vector_path
+        if not spacy.util.is_package(spacy_model):
+            spacy.cli.download(spacy_model)
         self.nlp = spacy.load(spacy_model)
 
         self.qa_pairs = pd.read_csv(csv_path)
