@@ -35,10 +35,10 @@ class SpacyChatbot:
 
 if __name__ == "__main__":
     import time
-    spacy_model = SpacyChatbot()
+    model = SpacyChatbot()
     start = time.time()
     example_question = 'Did you hear the king’s in Winterfell?'
     end = time.time()
 
-    print(spacy_model(example_question))
+    print(model(example_question))
     print('Seconds needed: {}'.format(end - start))
