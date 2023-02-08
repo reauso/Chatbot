@@ -4,7 +4,7 @@ import os
 import spacy
 
 from data_handling.corpora_preprocessing import preprocessing_method_mapping
-from data_handling.util import CorpusType, read_textfile, get_word_blacklist_regex
+from data_handling.util import CorpusType, get_word_blacklist_regex
 
 
 if __name__ == "__main__":

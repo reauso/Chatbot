@@ -1,14 +1,17 @@
 import os
+from typing import List
 
 import numpy as np
 import pandas as pd
 import spacy
+from chatbotsclient.chatbot import Chatbot
+from chatbotsclient.message import Message
 from tqdm import tqdm
 
 from data_handling.util import CorpusType
 
 
-class SpacyChatbot:
+class SpacyChatbot(Chatbot):
     def __init__(
             self,
             data_path=os.path.join(os.getcwd(), 'Data'),
@@ -16,6 +19,8 @@ class SpacyChatbot:
             csv_name_format='{}_corpus.csv',
             request_vectors_name_format='{}_request_vectors.npy',
     ):
+        super(SpacyChatbot, self).__init__(self.__call__, "Tyrion")
+        
         # get spacy nlp model
         if not spacy.util.is_package(spacy_model):
             spacy.cli.download(spacy_model)
@@ -49,7 +54,8 @@ class SpacyChatbot:
         # be sure that vector values are not 0
         self.request_vectors[np.where(self.request_vectors == 0)] += 0.0000000001
 
-    def __call__(self, request):
+    def __call__(self, message: Message, conversation: List[Message]):
+        request = message.message
         request_doc = self.nlp(request)
         request_vector = request_doc.vector
 
@@ -72,7 +78,8 @@ if __name__ == "__main__":
     model = SpacyChatbot()
     example_question = 'Did you hear the king’s in Winterfell?'
 
+    msg = Message(0, example_question, 0, 'Moderator')
     start = time.time()
-    print(model(example_question))
+    print(model(msg, []))
     end = time.time()
     print('Seconds needed: {}'.format(end - start))
