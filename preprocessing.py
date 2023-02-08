@@ -4,7 +4,8 @@ import os
 import spacy
 
 from data_handling.corpora_preprocessing import preprocessing_method_mapping
-from data_handling.util import CorpusType
+from data_handling.util import CorpusType, read_textfile, get_word_blacklist_regex
+
 
 if __name__ == "__main__":
     # setup argparse
@@ -19,9 +20,12 @@ if __name__ == "__main__":
     # define necessary names
     csv_filename_format = '{}_corpus.csv'
     request_vector_filename_format = '{}_request_vectors.npy'
+    word_blacklist_file = os.path.join(args.data_path, 'word_blacklist.txt')
+    word_blacklist_file = word_blacklist_file if os.path.isfile(word_blacklist_file) else None
 
     # create necessary objects
     nlp_model = spacy.load("en_core_web_lg")
+    word_blacklist_regex = get_word_blacklist_regex(word_blacklist_file)
 
     # collect processes
     all_preprocessing_types = []
@@ -38,4 +42,4 @@ if __name__ == "__main__":
 
     # preprocess
     for preprocess in all_preprocessing_types:
-        preprocess(args.data_path, nlp_model, csv_filename_format, request_vector_filename_format)
+        preprocess(args.data_path, nlp_model, word_blacklist_regex, csv_filename_format, request_vector_filename_format)

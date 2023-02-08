@@ -1,6 +1,7 @@
 import os.path
 
 import glob
+import re
 from enum import Enum
 
 
@@ -21,3 +22,27 @@ def files_in_directory(directory_path, file_patterns=None, recursive=False):
         files.extend(glob.glob(os.path.join(directory_path, pattern), recursive=recursive))
 
     return files
+
+
+def read_textfile(textfile):
+    """
+    Reads a textfile.
+    :param textfile: The textfile path.
+    :return: A List containing all lines of content.
+    """
+    f = open(textfile, 'r')
+    text = f.readlines()
+    f.close()
+
+    return text
+
+
+def get_word_blacklist_regex(blacklist_file):
+    word_blacklist = read_textfile(blacklist_file)
+    word_blacklist = [line[:-1].lower() for line in word_blacklist]
+    word_blacklist = set(word_blacklist)
+    word_regex = '|'.join(word_blacklist)
+    regex = r'(?i)\b({})\b'.format(word_regex)
+    regex = re.compile(regex)
+
+    return regex

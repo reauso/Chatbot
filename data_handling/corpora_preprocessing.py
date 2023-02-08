@@ -35,7 +35,7 @@ def compute_request_vectors(rr_pairs, nlp, name=''):
     return request_vectors
 
 
-def preprocess_got_transcripts(data_path, nlp, csv_name_format, request_vectors_name_format):
+def preprocess_got_transcripts(data_path, nlp, blacklist_regex, csv_name_format, request_vectors_name_format):
     # derive necessary paths
     name = CorpusType.GoT.value
     transcripts_path = os.path.join(data_path, 'GotTranscripts')
@@ -56,6 +56,7 @@ def preprocess_got_transcripts(data_path, nlp, csv_name_format, request_vectors_
         episode_content = episode.read()
         rr_tuples = re.findall(request_reply_pattern, episode_content)
         rr_tuples = [(pair[0].replace('\n', ''), pair[1].replace('\n', '')) for pair in rr_tuples]
+        rr_tuples = [pair for pair in rr_tuples if blacklist_regex.search(pair[1]) is None]
 
         for pair in rr_tuples:
             rr_series = pd.DataFrame({'request': [pair[0]], 'reply': [pair[1]]})
@@ -69,7 +70,7 @@ def preprocess_got_transcripts(data_path, nlp, csv_name_format, request_vectors_
     np.save(request_vectors_path, request_vectors)
 
 
-def process_convokit_corpus(data_path, nlp, corpus_type, download_name, csv_name_format, request_vectors_name_format):
+def process_convokit_corpus(data_path, nlp, blacklist_regex, corpus_type, download_name, csv_name_format, request_vectors_name_format):
     # derive necessary paths
     name = corpus_type.value
     data_dir = os.path.join(data_path, 'Cornell')
@@ -89,11 +90,11 @@ def process_convokit_corpus(data_path, nlp, corpus_type, download_name, csv_name
     # process all utterances
     tqdm_desc = '{}: Process Utterances'.format(name)
     for key, reply in tqdm(corpus.utterances.items(), unit='Utterances', desc=tqdm_desc):
-        if reply.reply_to in corpus.utterances:
+        if reply.reply_to in corpus.utterances and blacklist_regex.search(reply.text) is None:
             request = corpus.utterances[reply.reply_to]
 
-            ra_series = pd.DataFrame({'request': [request.text], 'reply': [reply.text]})
-            rr_pairs = pd.concat([rr_pairs, ra_series], ignore_index=True)
+            rr_series = pd.DataFrame({'request': [request.text], 'reply': [reply.text]})
+            rr_pairs = pd.concat([rr_pairs, rr_series], ignore_index=True)
 
     # save csv
     rr_pairs.to_csv(csv_path, index=False)
@@ -103,11 +104,11 @@ def process_convokit_corpus(data_path, nlp, corpus_type, download_name, csv_name
     np.save(request_vectors_path, request_vectors)
 
 
-def preprocess_cornell_movie_dialogs(data_path, nlp, csv_name_format, request_vectors_name_format):
-    process_convokit_corpus(data_path, nlp, CorpusType.Cornell, 'movie-corpus', csv_name_format,
+def preprocess_cornell_movie_dialogs(data_path, nlp, blacklist_regex, csv_name_format, request_vectors_name_format):
+    process_convokit_corpus(data_path, nlp, blacklist_regex, CorpusType.Cornell, 'movie-corpus', csv_name_format,
                             request_vectors_name_format)
 
 
-def preprocess_parliament_questions(data_path, nlp, csv_name_format, request_vectors_name_format):
-    process_convokit_corpus(data_path, nlp, CorpusType.Parliament, 'parliament-corpus', csv_name_format,
+def preprocess_parliament_questions(data_path, nlp, blacklist_regex, csv_name_format, request_vectors_name_format):
+    process_convokit_corpus(data_path, nlp, blacklist_regex, CorpusType.Parliament, 'parliament-corpus', csv_name_format,
                             request_vectors_name_format)
