@@ -1,6 +1,13 @@
 import os.path
 
 import glob
+from enum import Enum
+
+
+class CorpusType(Enum):
+    GoT = 'got'  # got transcripts
+    Cornell = 'cornell'  # cornell movie dialogs
+    Parliament = 'parliament'  # Parliament Question Time Corpus
 
 
 def files_in_directory(directory_path, file_patterns=None, recursive=False):

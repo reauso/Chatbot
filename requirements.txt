@@ -1,5 +1,4 @@
 pandas==1.5.2
 spacy==3.4.4
-spacy-legacy==3.0.11
-spacy-loggers==1.0.4
 tqdm==4.64.1
+numpy~=1.24.1
