@@ -4,7 +4,7 @@ from typing import List
 
 from model.patternbased_chatbot import pattern_based_answer
 from model.spacy_chatbot import SpacyChatbot
-from model.test import print_ner
+from model.ner import print_ner
 
 
 def compute_reply(message: str, conversation: List[Message]=None):
