@@ -2,26 +2,31 @@ from chatbotsclient.chatbot import Chatbot
 from chatbotsclient.message import Message
 from typing import List
 
+from model.patternbased_chatbot import pattern_based_answer
 from model.spacy_chatbot import SpacyChatbot
 
 
-def compute_answer(message: str, conversation: List[Message]=None):
+def compute_reply(message: str, conversation: List[Message]=None):
+    lower_message = message.lower()
+
+    # define reply
+    reply = {}
+
     # Corpus based chatbot reply
-    reply, similarity = corpus_based(message)
-    print(similarity)
+    reply['corpus'], similarity = corpus_based(lower_message)
 
     # template based chatbot reply
-    # TODO
+    reply['pattern'] = pattern_based_answer(message)
 
-    # default answer
+    # default reply
     if similarity < 0.5:
-        print('Sorry but I don`t know what you mean.')
+        reply['default'] = 'Sorry but I don`t know what you mean.'
 
     return reply
 
 
 def respond(message: Message, conversation: List[Message]):
-    return compute_answer(message.message, conversation)
+    return compute_reply(message.message, conversation)
 
 
 if __name__ == "__main__":
@@ -40,7 +45,9 @@ if __name__ == "__main__":
         user_input = input(">>> ").strip()
         while "exit" not in user_input.lower():
 
-            answer = compute_answer(user_input)
+            reply = compute_reply(user_input)
 
-            print(answer)
+            for key, value in reply.items():
+                print('\t{}: {}'.format(key, value))
+
             user_input = input(">>> ").strip()

@@ -56,7 +56,7 @@ class SpacyChatbot:
 
         similarities = self.database_cosine_similarities(request_vector)
         best_index = np.argmax(similarities)
-        print(self.rr_pairs.loc[best_index, 'request'])
+        #print(self.rr_pairs.loc[best_index, 'request'])
 
         return self.rr_pairs.loc[best_index, 'reply'], similarities[best_index]
 
@@ -84,6 +84,7 @@ if __name__ == "__main__":
     ]
 
     for request in example_request:
+        request = request.lower()
         start = time.time()
         reply, similarity = model(request)
         end = time.time()
