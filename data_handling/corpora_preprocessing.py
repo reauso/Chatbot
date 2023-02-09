@@ -59,7 +59,7 @@ def preprocess_got_transcripts(data_path, nlp, blacklist_regex, csv_name_format,
         rr_tuples = [pair for pair in rr_tuples if blacklist_regex.search(pair[1]) is None]
 
         for pair in rr_tuples:
-            rr_series = pd.DataFrame({'request': [pair[0]], 'reply': [pair[1]]})
+            rr_series = pd.DataFrame({'request': [pair[0].lower()], 'reply': [pair[1]]})
             rr_pairs = pd.concat([rr_pairs, rr_series], ignore_index=True)
 
     # save csv
@@ -93,7 +93,7 @@ def process_convokit_corpus(data_path, nlp, blacklist_regex, corpus_type, downlo
         if reply.reply_to in corpus.utterances and blacklist_regex.search(reply.text) is None:
             request = corpus.utterances[reply.reply_to]
 
-            rr_series = pd.DataFrame({'request': [request.text], 'reply': [reply.text]})
+            rr_series = pd.DataFrame({'request': [request.text.lower()], 'reply': [reply.text]})
             rr_pairs = pd.concat([rr_pairs, rr_series], ignore_index=True)
 
     # save csv
