@@ -1,5 +1,4 @@
 import os
-from typing import List
 
 import numpy as np
 import pandas as pd
@@ -7,8 +6,6 @@ import spacy
 from tqdm import tqdm
 
 from data_handling.util import CorpusType
-
-
 
 
 class SpacyChatbot:
@@ -59,8 +56,9 @@ class SpacyChatbot:
 
         similarities = self.database_cosine_similarities(request_vector)
         best_index = np.argmax(similarities)
+        print(self.rr_pairs.loc[best_index, 'request'])
 
-        return self.rr_pairs.loc[best_index, 'reply']
+        return self.rr_pairs.loc[best_index, 'reply'], similarities[best_index]
 
     def database_cosine_similarities(self, request_vector):
         # be sure that vector values are not 0
@@ -74,9 +72,19 @@ if __name__ == "__main__":
     import time
 
     model = SpacyChatbot()
-    example_question = 'Did you hear the king’s in Winterfell?'
+    example_request = [
+        'Did you hear the king’s in Winterfell?',
+        'Hello',
+        'What are you doing',
+        'Do you like cats?',
+        'Do you have a cat?',
+        'yes',
+        'Yes',
+        'no',
+    ]
 
-    start = time.time()
-    print(model(example_question))
-    end = time.time()
-    print('Seconds needed: {}'.format(end - start))
+    for request in example_request:
+        start = time.time()
+        reply, similarity = model(request)
+        end = time.time()
+        print('sec: {:.2f}, sim: {:.4f}, request: {}, reply: {}'.format(end - start, similarity, request, reply))
