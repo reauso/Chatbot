@@ -4,6 +4,7 @@ from typing import List
 
 from model.patternbased_chatbot import pattern_based_answer
 from model.spacy_chatbot import SpacyChatbot
+from model.test import print_ner
 
 
 def compute_reply(message: str, conversation: List[Message]=None):
@@ -46,8 +47,9 @@ if __name__ == "__main__":
         while "exit" not in user_input.lower():
 
             reply = compute_reply(user_input)
-
+            print_ner(user_input)
             for key, value in reply.items():
                 print('\t{}: {}'.format(key, value))
+                print_ner(value)
 
             user_input = input(">>> ").strip()
