@@ -1,7 +1,6 @@
 blis==0.7.9
 catalogue==2.0.8
 ccpke==2.0.0
-certifi @ file:///C:/b/abs_85o_6fm0se/croot/certifi_1671487778835/work/certifi
 cffi==1.15.1
 charset-normalizer==3.0.1
 chatbotsclient @ git+https://github.com/Robstei/chatbotsclient@a2dcaa8e5ce3e8f64d5d92c53f0fff56cc409229
