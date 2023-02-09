@@ -1,53 +1,93 @@
-Tyrion Lannister
-Jon Snow
-Daenerys Targaryen
-Bran Stark
-Sansa Stark
-Arya Stark
-Cersei Lannister
-Jaime Lannister
-Joffrey Baratheon
-Tommen Baratheon
-Sandor Clegane (The Hound)
-Theon Greyjoy
-Samwell Tarly
-Davos Seaworth
-Brienne of Tarth
-Petyr Baelish (Littlefinger)
+Tyrion
+Lannister
+Jon
+Snow
+Daenerys
+Targaryen
+Bran
+Stark
+Sansa
+Arya
+Cersei
+Lannister
+Jaime
+Lannister
+Joffrey
+Baratheon
+Tommen
+Baratheon
+Sandor
+Clegane
+Hound
+Theon
+Greyjoy
+Samwell
+Tarly
+Davos
+Seaworth
+Brienne
+Tarth
+Petyr
+Baelish
+Littlefinger
 Varys
 Bronn
 Missandei
-Jorah Mormont
+Jorah
+Mormont
 Gendry
-Yara Greyjoy
-Euron Greyjoy
-Robb Stark
-Catelyn Stark
-Eddard Stark (Ned Stark)
-Rickon Stark
-Talisa Maegyr
-Margaery Tyrell
-Renly Baratheon
-Loras Tyrell
-Stannis Baratheon
-Balon Greyjoy
-Ramsay Bolton
+Yara
+Greyjoy
+Euron
+Greyjoy
+Robb
+Stark
+Catelyn
+Stark
+Eddard
+Stark
+Ned
+Rickon
+Stark
+Talisa
+Maegyr
+Margaery
+Tyrell
+Renly
+Baratheon
+Loras
+Tyrell
+Stannis
+Baratheon
+Balon
+Greyjoy
+Ramsay
+Bolton
 Ros
 Shae
 Gilly
 Ygritte
 Osha
 Hodor
-Meera Reed
-Jojen Reed
-Grey Worm
-Barristan Selmy
-Xaro Xhoan Daxos
+Meera
+Reed
+Jojen
+Reed
+Grey
+Worm
+Barristan
+Selmy
+Xaro
+Xhoan
+Daxos
 Qyburn
 Melisandre
-Mance Rayder
-Beric Dondarrion
-Tormund Giantsbane
+Mance
+Rayder
+Beric
+Dondarrion
+Tormund
+Giantsbane
 
 King's Landing
 Winterfell
