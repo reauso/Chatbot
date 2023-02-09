@@ -4,7 +4,7 @@ import os
 import spacy
 
 from data_handling.corpora_preprocessing import preprocessing_method_mapping
-from util import CorpusType, get_word_blacklist_regex
+from data_handling.util import CorpusType, get_word_blacklist_regex
 
 
 if __name__ == "__main__":
@@ -24,7 +24,10 @@ if __name__ == "__main__":
     word_blacklist_file = word_blacklist_file if os.path.isfile(word_blacklist_file) else None
 
     # create necessary objects
+    if not spacy.util.is_package("en_core_web_lg"):
+        spacy.cli.download("en_core_web_lg")
     nlp_model = spacy.load("en_core_web_lg")
+
     word_blacklist_regex = get_word_blacklist_regex(word_blacklist_file)
 
     # collect processes

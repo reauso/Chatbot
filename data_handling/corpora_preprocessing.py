@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
-from util import CorpusType, files_in_directory
+from data_handling.util import CorpusType, files_in_directory
 
 
 def preprocessing_method_mapping():

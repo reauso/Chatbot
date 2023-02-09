@@ -6,7 +6,7 @@ import pandas as pd
 import spacy
 from tqdm import tqdm
 
-from data_handling import CorpusType
+from data_handling.util import CorpusType
 
 
 
