@@ -133,4 +133,4 @@ dmypy.json
 Data/Cornell
 Data/*.csv
 Data/*.npy
-temp.py
+temp*.py
