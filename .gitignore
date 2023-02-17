@@ -130,7 +130,6 @@ dmypy.json
 
 # pycharm
 .idea
-Data/Corpora/Cornell
-Data/Corpora/*.csv
-Data/Corpora/*.npy
+Data/Corpora
+!Data/Corpora/GotTranscripts
 temp*.py

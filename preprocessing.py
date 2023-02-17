@@ -15,9 +15,11 @@ if __name__ == "__main__":
     parser.add_argument('--with_got', action='store_true', help='Preprocess the got transcripts.')
     parser.add_argument('--with_cornell', action='store_true', help='Preprocess the cornell movie-dialogs corpus.')
     parser.add_argument('--with_parliament', action='store_true', help='Preprocess the Parliament Question Time Corpus.')
+    parser.add_argument('--with_daily', action='store_true', help='Preprocess the Daily Dialogs Corpus.')
     args = parser.parse_args()
 
     # define necessary names
+    corpora_path = os.path.join(args.data_path, 'Corpora')
     csv_filename_format = '{}_corpus.csv'
     request_vector_filename_format = '{}_request_vectors.npy'
     word_blacklist_file = os.path.join(args.data_path, 'word_blacklist.txt')
@@ -38,6 +40,8 @@ if __name__ == "__main__":
         all_preprocessing_types.append(CorpusType.Cornell)
     if args.with_parliament or args.with_all:
         all_preprocessing_types.append(CorpusType.Parliament)
+    if args.with_daily or args.with_all:
+        all_preprocessing_types.append(CorpusType.DailyDialogs)
 
     # convert to preprocess methods (callable)
     mapping = preprocessing_method_mapping()
@@ -45,4 +49,4 @@ if __name__ == "__main__":
 
     # preprocess
     for preprocess in all_preprocessing_types:
-        preprocess(args.data_path, nlp_model, word_blacklist_regex, csv_filename_format, request_vector_filename_format)
+        preprocess(corpora_path, nlp_model, word_blacklist_regex, csv_filename_format, request_vector_filename_format)
