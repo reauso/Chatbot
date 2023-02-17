@@ -16,7 +16,6 @@ class SpacyChatbot:
             csv_name_format='{}_corpus.csv',
             request_vectors_name_format='{}_request_vectors.npy',
     ):
-        
         # get spacy nlp model
         if not spacy.util.is_package(spacy_model):
             spacy.cli.download(spacy_model)
@@ -27,8 +26,8 @@ class SpacyChatbot:
         for corpus_type in CorpusType:
             csv_name = csv_name_format.format(corpus_type.value)
             request_vectors_name = request_vectors_name_format.format(corpus_type.value)
-            csv_path = os.path.join(data_path, csv_name)
-            request_vectors_path = os.path.join(data_path, request_vectors_name)
+            csv_path = os.path.join(data_path, 'Corpora', csv_name)
+            request_vectors_path = os.path.join(data_path, 'Corpora', request_vectors_name)
 
             if os.path.isfile(csv_path) and os.path.isfile(request_vectors_path):
                 available_corpora.append({'csv_path': csv_path, 'request_vectors_path': request_vectors_path})
@@ -81,6 +80,7 @@ if __name__ == "__main__":
         'yes',
         'Yes',
         'no',
+        'What do you think of Tyrion?',
     ]
 
     for request in example_request:

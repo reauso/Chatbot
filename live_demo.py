@@ -1,8 +1,10 @@
+import os.path
+
 from chatbotsclient.chatbot import Chatbot
 from chatbotsclient.message import Message
 from typing import List
 
-from model.patternbased_chatbot import pattern_based_answer
+from model.patternbased_chatbot import PatternBasedChatbot
 from model.spacy_chatbot import SpacyChatbot
 from model.ner import print_ner
 
@@ -17,7 +19,7 @@ def compute_reply(message: str, conversation: List[Message]=None):
     reply['corpus'], similarity = corpus_based(lower_message)
 
     # template based chatbot reply
-    reply['pattern'] = pattern_based_answer(message)
+    reply['pattern'] = patter_based(message)
 
     # default reply
     if similarity < 0.5:
@@ -31,8 +33,12 @@ def respond(message: Message, conversation: List[Message]):
 
 
 if __name__ == "__main__":
+    # define necessary paths
+    text_pattern_file = os.path.normpath(os.getcwd() + '/Data/text_patterns.json')
+
     # initialize necessary objects
     corpus_based = SpacyChatbot()
+    patter_based = PatternBasedChatbot(text_pattern_file)
 
     print("Shall we endeavor to forge a link with other digital conversationalists?")
     print("Affirm with 'yes', and negate with 'no'... a simple enough task, I should think.")

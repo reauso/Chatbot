@@ -1,3 +1,4 @@
+import json
 import os.path
 
 import glob
@@ -35,6 +36,19 @@ def read_textfile(textfile):
     f.close()
 
     return text
+
+
+def read_jsonfile(jsonfile):
+    """
+    Reads a jsonfile.
+    :param jsonfile: The jsonfile path.
+    :return: The object.
+    """
+    f = open(jsonfile, 'r')
+    json_object = json.load(f)
+    f.close()
+
+    return json_object
 
 
 def get_word_blacklist_regex(blacklist_file):

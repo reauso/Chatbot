@@ -38,9 +38,9 @@ def compute_request_vectors(rr_pairs, nlp, name=''):
 def preprocess_got_transcripts(data_path, nlp, blacklist_regex, csv_name_format, request_vectors_name_format):
     # derive necessary paths
     name = CorpusType.GoT.value
-    transcripts_path = os.path.join(data_path, 'GotTranscripts')
-    csv_path = os.path.join(data_path, csv_name_format.format(name))
-    request_vectors_path = os.path.join(data_path, request_vectors_name_format.format(name))
+    transcripts_path = os.path.join(data_path, 'Corpora', 'GotTranscripts')
+    csv_path = os.path.join(data_path, 'Corpora', csv_name_format.format(name))
+    request_vectors_path = os.path.join(data_path, 'Corpora', request_vectors_name_format.format(name))
 
     # get all episode file paths
     episode_file_paths = files_in_directory(transcripts_path, '**/episode *.txt', recursive=True)
@@ -73,10 +73,10 @@ def preprocess_got_transcripts(data_path, nlp, blacklist_regex, csv_name_format,
 def process_convokit_corpus(data_path, nlp, blacklist_regex, corpus_type, download_name, csv_name_format, request_vectors_name_format):
     # derive necessary paths
     name = corpus_type.value
-    data_dir = os.path.join(data_path, 'Cornell')
-    corpus_file = os.path.join(data_dir, '{}/corpus.json'.format(download_name))
-    csv_path = os.path.join(data_path, csv_name_format.format(name))
-    request_vectors_path = os.path.join(data_path, request_vectors_name_format.format(name))
+    data_dir = os.path.join(data_path, 'Corpora', 'Cornell')
+    corpus_file = os.path.join(data_dir, 'Corpora', '{}/corpus.json'.format(download_name))
+    csv_path = os.path.join(data_path, 'Corpora', csv_name_format.format(name))
+    request_vectors_path = os.path.join(data_path, 'Corpora', request_vectors_name_format.format(name))
 
     # define necessary objects
     rr_pairs = pd.DataFrame({'request': [], 'reply': []})
