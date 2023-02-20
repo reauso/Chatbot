@@ -65,7 +65,7 @@ def preprocess_got_transcripts(data_path, nlp, blacklist_regex, csv_name_format,
         episode = open(episode_file, 'r', encoding='utf8')
         episode_content = episode.read()
         rr_tuples = re.findall(request_reply_pattern, episode_content)
-        rr_tuples = [(pair[0].replace('\n', ''), pair[1].replace('\n', '')) for pair in rr_tuples]
+        rr_tuples = [(re.sub(r'(?i)\([^\(\)]*\)\S?\s?', '', pair[0].replace('\n', '')), re.sub(r'(?i)\([^\(\)]*\)\S?\s?', '', pair[1].replace('\n', ''))) for pair in rr_tuples]
         rr_tuples = [pair for pair in rr_tuples if blacklist_regex.search(pair[1]) is None]
 
         for pair in rr_tuples:
