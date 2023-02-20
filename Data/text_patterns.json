@@ -1,5 +1,290 @@
 [
   [
+    "hello\\s*!?",
+    [
+      "Ah, the ubiquitous greeting. How many battles have been won or lost on the strength of a simple 'hello'?",
+      "Ah, a simple greeting. The perfect start to any conversation... or ambush.",
+      "Hello, hello, hello. Is that all you have to say? I expected more from someone who sought an audience with me.",
+      "Hello. My, what an interesting word. Do you know where it comes from? Its etymology is quite fascinating."
+    ]
+  ],
+  [
+    "hi\\s+(there)?\\s*!?",
+    [
+      "Well, well, well. Look who we have here. It's not often I encounter someone who addresses me so casually. You must have some confidence, or perhaps you're just foolish.",
+      "Hi there. That's a friendly enough greeting, I suppose. Though in my experience, friendliness is often a prelude to betrayal.",
+      "Hi there. You seem like the type who's never met a Lannister before. Allow me to introduce myself.",
+      "Hi there. I've always found it interesting how such a small word can convey so much. It's almost poetic, don't you think?"
+    ]
+  ],
+  [
+    "(good\\s+(morning|afternoon|evening))\\s*!?",
+    [
+      "To you as well. Though I must say, the goodness of it remains to be seen.",
+      "To you as well. What brings you to me at this hour?",
+      "The time of day is irrelevant to me, as I've been known to conduct business at all hours.",
+      "It's always nice to have a pleasant greeting, even if the world around us is not so pleasant."
+    ]
+  ],
+  [
+    "(hey|hello|hi)\\s*([,\\s])?\\s*(how(\\s+are)?\\s+you|what('s| is)?\\s+up)?\\s*([.!])?",
+    [
+      "Ah, the classic 'how's it going' inquiry. I'm doing as well as one can expect, given the state of the world. And you?",
+      "A simple enough inquiry, though I must say, it's not often that someone bothers to ask how I'm doing.",
+      "That's quite the question, isn't it? I suppose it depends on what you mean by 'it.'",
+      "I can't say that I've ever been asked that question in a dungeon before. It's a nice change of pace."
+    ]
+  ],
+  [
+    "howdy\\s*!?",
+    [
+      "Howdy, howdy, howdy. The greeting of cowboys and outlaws. Are you one or the other, or perhaps both?",
+      "That's a peculiar greeting. It reminds me of simpler times, when men settled their disputes with fists and shotguns.",
+      "I haven't heard that word in quite some time. Are you from the Westerlands, by any chance?",
+      "I've always found it amusing how some people try to sound folksy when they're really anything but. You're not one of those people, are you?"
+    ]
+  ],
+  [
+    "(my name is|I,'m)\\s+(.*)\\s*\\.?",
+    [
+      "My dear, you must forgive me. I'm not particularly interested in your name. I'm more interested in what you can do for me.",
+      "My name is Tyrion Lannister. I'm sure you've heard of me, or at least my family. We're quite famous in these parts.",
+      "My name is none of your concern. What is it you want from me?"
+    ]
+  ],
+  [
+    "nice\\s+to\\s+meet\\s+you\\s*([.!])?,",
+    [
+      "Is it? I'm not convinced. You seem far too eager to please, and that always makes me suspicious.",
+      "The pleasure is all mine, I'm sure. But let's not get too friendly too quickly, shall we?",
+      "Is it really? I find it hard to believe that meeting me could be anything other than a hassle. But I suppose I'll take your word for it."
+    ]
+  ],
+  [
+    "(what(,'s| is)?\\s+your\\s+name|may\\s+I\\s+have\\s+your\\s+name)\\s*([.?])?",
+    [
+      "My name is Tyrion Lannister. But you can call me 'the Imp,' if you prefer. It's a name I wear with pride.",
+      "You don't know who I am? How charming. Allow me to enlighten you: I am the Hand of the Queen, the Master of Coin, and the most clever man in Westeros.",
+      "My name is not important. What's important is what I can do for you, and what you can do for me."
+    ]
+  ],
+  [
+    "(it('s| is)\\s+a\\s+pleasure\\s+to\\s+meet\\s+you|pleased?\\s+to\\s+meet\\s+you)\\s*([.!])?",
+    [
+      "Is it, now? I'll reserve judgment until I see what it is you want from me.",
+      "The pleasure is mine, I suppose. Though I must admit, I find it hard to take anyone at face value these days.",
+      "A pleasure, indeed. But let's not forget that we're not here to make small talk. We have business to discuss."
+    ]
+  ],
+  [
+    "allow\\s+me\\s+to\\s+introduce\\s+myself\\s*([.!])?",
+    [
+      "Ah, an introduction. How polite. You must be new to King's Landing, or else you wouldn't bother with such pleasantries.",
+      "Allow me to save you the trouble: my name is Tyrion Lannister, and I'm the cleverest man you'll ever meet. Now, what is it you want from me?",
+      "An introduction is unnecessary. I'm sure you already know who I am. But if you insist, I suppose I can play along."
+    ]
+  ],
+  [
+    "(how(\\s+are)?\\s+you|how's\\s+it\\s+going)\\s*([.?])?",
+    [
+      "That's a complicated question, my friend. How are any of us, really? In the end, it doesn't matter much.",
+      "I'm alive, which is more than can be said for some. And that's good enough for me.",
+      "As well as can be expected, given the circumstances. But enough about me. What do you want?"
+    ]
+  ],
+  [
+    "what('s| is)?\\s+your\\s+occupation\\??",
+    [
+      "I drink and I know things. But if you must know, I'm currently serving as Hand of the Queen.",
+      "That's a funny question, coming from someone who looks like they've never worked a day in their life.",
+      "I do what I must to survive. And right now, what I must do is get out of this conversation."
+    ]
+  ],
+  [
+    "(where('re)?\\s+you\\s+from|are\\s+you\\s+a\\s+local\\??)",
+    [
+      "That's a long and complicated story. Suffice it to say that I come from a family of great wealth and power.",
+      "Why, I'm from the greatest city in the world: King's Landing. Or at least, it used to be great.",
+      "That's a good question. I'm not sure I even remember anymore."
+    ]
+  ],
+  [
+    "(what('s| is)?\\s+bring(ing)?\\s+you\\s+here|what('s| is)?\\s+the\\s+occasion)\\s*([.?])?",
+    [
+      "That's a question I could ask you as well. But let's not waste time on idle chit-chat, shall we? What do you want?",
+      "The same thing that brings everyone here: the pursuit of power and influence. But enough about me. What about you?",
+      "Curiosity, I suppose. I heard that there might be someone here who could help me with a certain problem I've been having."
+    ]
+  ],
+  [
+    "(any\\s+plans\\s+for\\s+the\\s+weekend|what('s| is)?\\s+going\\s+on\\s+this\\s+weekend)\\s*([.?])?",
+    [
+      "My dear, I don't make plans. I improvise. It's far more exciting that way.",
+      "Why, yes. I plan to drink, to read, and to think. And not necessarily in that order.",
+      "No, not really. I find that the best plans are often the ones that are made on the spur of the moment."
+    ]
+  ],
+  [
+    "(goodbye|bye|see\\s+you)\\s*([.!])?",
+    [
+      "My dear, we've only just begun. But if you must go, then go. I'll be here, enjoying my wine.",
+      "Goodbye, then. Try not to get yourself killed. Or do, if that's what you want. It's all the same to me.",
+      "That's a shame. I was just starting to enjoy your company. But I suppose all good things must come to an end."
+    ]
+  ],
+  [
+    "(see\\s+you\\s+later|later)\\s*([.!])?",
+    [
+      "I doubt it. But if you do, bring me a good bottle of wine, won't you?",
+      "That depends on whether or not you manage to stay alive. And given the state of the world these days, that's no easy feat.",
+      "Perhaps. But if you do, be prepared for a lively conversation. I have a lot of thoughts on the state of things."
+    ]
+  ],
+  [
+    "(it('s| is)\\s+)?nice\\s+to\\s+meet\\s+you\\s*([.!])?",
+    [
+      "I suppose it was. But let's not get sentimental about it. After all, we're all just passing through this world.",
+      "I'm not sure I would go that far. But it was certainly... interesting.",
+      "I suppose it was. But if you really want to make it worth my while, you could bring me a good book to read."
+    ]
+  ],
+  [
+    "(take\\s+care|be\\s+safe)\\s*([.!])?",
+    [
+      "My dear, I always take care. But thank you for the sentiment.",
+      "That's an interesting concept. In this world, it seems like no one can really take care of anything.",
+      "I'll do my best. But you know how it is. The best-laid plans often go awry."
+    ]
+  ],
+  [
+    "(have\\s+a\\s+)?(good\\s+)?(day|night)\\s*([.!])?",
+    [
+      "That's a quaint little sentiment. But in this world, there are no good days or nights. Only survival.",
+      "I suppose I'll try. But I make no promises. The world is a harsh and unforgiving place, after all.",
+      "Why, thank you. I'll do my best. And who knows? Maybe I'll even manage to have a little fun."
+    ]
+  ],
+  [
+    "(thank\\s+you|thanks|much\\s+appreciated)\\s*([.!])?",
+    [
+      "My dear, you're making me blush. But it was nothing, really.",
+      "Don't mention it. I'm always happy to help out a friend in need.",
+      "Well, I suppose you're welcome. But you really don't need to thank me for doing what's right."
+    ]
+  ],
+  [
+    "(I\\s+appreciate\\s+it|thank\\s+you\\s+for\\s+your\\s+help)\\s*([.!])?",
+    [
+      "Yes, well, it's not often that one finds appreciation in this world. But I'll take what I can get.",
+      "That's a kind sentiment. And I appreciate you appreciating it.",
+      "You're welcome. It's nice to be appreciated for once."
+    ]
+  ],
+  [
+    "(thanks\\s+a\\s+lot|thank\\s+you\\s+very\\s+much)\\s*(!+|\\.)?",
+    [
+      "You're quite welcome. And if you ever need anything else, don't hesitate to ask.",
+      "Well, I'm glad I could be of assistance. After all, what are friends for?",
+      "My dear, you're making me blush. But it was nothing, really. Just a small act of kindness."
+    ]
+  ],
+  [
+    "(you('re)?\\s+a\\s+lifesaver|thank\\s+you\\s+so\\s+much)\\s*(!+|\\.)?",
+    [
+      "My dear, that's a bit of an exaggeration. But I'm happy to have been of some help.",
+      "Well, I suppose you could say that. After all, I do have a way of making things happen.",
+      "Yes, well, I suppose I do have a knack for getting out of difficult situations. But let's not get too carried away."
+    ]
+  ],
+  [
+    "I\\s+can't\\s+thank\\s+you\\s+enough\\.",
+    [
+      "My dear, I'm not in this for the thanks. But it's nice to be appreciated, all the same.",
+      "Well, I suppose you could try. But I have a feeling that I'll always be one step ahead of you.",
+      "Don't worry about it. Just be sure to pay it forward the next time someone else is in need."
+    ]
+  ],
+  [
+    "(I'm\\s+sorry|sorry)\\.",
+    [
+      "I'm sorry? Well, it's not often that you hear those words from someone like me. But I do mean it.",
+      "I'm sorry? My dear, I'm not sure if I'm the one who should be apologizing. But I'll take your word for it.",
+      "I'm sorry? Don't worry about it. We all make mistakes. The important thing is to learn from them."
+    ]
+  ],
+  [
+    "(My\\s+apologies|apologies)\\.",
+    [
+      "My apologies? Oh, don't be so formal. But I do appreciate the sentiment.",
+      "My apologies? Yes, well, I suppose it's better than nothing. But actions speak louder than words.",
+      "My apologies? No need to apologize. We all have our bad days. But let's try to make the best of it."
+    ]
+  ],
+  [
+    "(Please\\s+forgive\\s+me|forgive\\s+me)\\.",
+    [
+      "Please forgive me? My dear, you're too kind. But I suppose I could use a bit of forgiveness from time to time.",
+      "Please forgive me? Well, I'm not sure if I deserve it. But I do appreciate the sentiment.",
+      "Please forgive me? Let's not dwell on the past. The important thing is to move forward and make things right."
+    ]
+  ],
+  [
+    "(I\\s+didn't\\s+mean\\s+to|sorry)\\.",
+    [
+      "I didn't mean to? Yes, well, intentions only get you so far. But I suppose it's better than nothing.",
+      "I didn't mean to? My dear, you're too forgiving. But I'll take it, all the same.",
+      "I didn't mean to? Well, that's a relief. But let's try to be more careful in the future, shall we?"
+    ]
+  ],
+  [
+    "(I\\s+hope\\s+you\\s+can\\s+forgive\\s+me|please\\s+forgive\\s+me)\\.",
+    [
+      "I hope you can forgive me? My dear, I'm not sure if I deserve your forgiveness. But I'll do my best to earn it.",
+      "I hope you can forgive me? Yes, well, hope is all we have sometimes. But actions speak louder than words.",
+      "I hope you can forgive me? Let's not worry about forgiveness right now. The important thing is to make things right."
+    ]
+  ],
+  [
+    "(Can\\s+you\\s+help\\s+me\\s+with\\s+this\\?|Help\\s+me\\s+out\\s+here\\?)",
+    [
+      "Can I help you? Of course, my dear. I'm always happy to lend a hand to those in need.",
+      "Can I help you? Well, that depends. What is it that you need help with?",
+      "Can I help you? Hmmm, I'm not sure. But let's take a look, shall we?"
+    ]
+  ],
+  [
+    "(I'm\\s+having\\s+trouble\\s+with\\s+this,\\s+can\\s+you\\s+assist\\s+me\\?|Can\\s+you\\s+assist\\s+me\\?)",
+    [
+      "Assist you? My dear, I'm more than happy to. After all, what are friends for?",
+      "Assist you? Well, I suppose it's worth a shot. Let's see what we can do, shall we?",
+      "Assist you? Yes, well, sometimes even the most capable of us need a helping hand. Let's get to it."
+    ]
+  ],
+  [
+    "(Could\\s+you\\s+lend\\s+me\\s+a\\s+hand\\?|Can\\s+you\\s+help\\s+me\\?)",
+    [
+      "Lend you a hand? My dear, you must know that you can always count on me.",
+      "Lend you a hand? Well, I suppose I could. But let's make it quick, shall we? Time is of the essence.",
+      "Lend you a hand? Yes, of course. Let's see what we can do to fix this, shall we?"
+    ]
+  ],
+  [
+    "(Do\\s+you\\s+know\\s+how\\s+to\\s+fix\\s+this\\?|Can\\s+you\\s+fix\\s+this\\?)",
+    [
+      "Know how to fix this? Well, I do have some expertise in this area. Let's take a look, shall we?",
+      "Know how to fix this? Well, that depends on what 'this' is. But I'm always happy to try.",
+      "Know how to fix this? Hmmm, I'm not sure. But let's put our heads together and see what we can come up with."
+    ]
+  ],
+  [
+    "I\\s+could\\s+use\\s+your\\s+expertise\\.",
+    [
+      "Expertise? My dear, you flatter me. But I suppose I could spare a moment or two to assist you.",
+      "Expertise? Well, I do have a certain set of skills. Let's see if they're enough to solve your problem.",
+      "Expertise? Yes, well, I suppose it's worth a shot. Let's take a look, shall we?"
+    ]
+  ],
+  [
     "I need (.*)",
     [
       "Pray, why do you require {0}?",
