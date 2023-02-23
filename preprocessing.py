@@ -9,11 +9,14 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from tqdm import tqdm
 
 from data_handling.corpora_preprocessing import preprocessing_method_mapping
-from data_handling.util import CorpusType, get_word_blacklist_regex, read_textfile, files_in_directory
+from data_handling.util import CorpusType, get_word_blacklist_regex, read_textfile, files_in_directory, \
+    get_available_corpora, load_corpora_csvs, read_jsonfile
 
 
 def train_tfidf_vectorizer(data_path, corpora_data_path, vectorizer_path, csv_name_format, request_vector_name_format):
-    rr_pairs = load_all_available_corpora(csv_name_format, corpora_data_path)
+    print('Train TFIDF Model and save TFIDF Corpora Vectors')
+
+    rr_pairs = load_all_available_corpora(corpora_data_path, csv_name_format, request_vector_name_format)
 
     # load stopword list
     stop_word_file = os.path.join(data_path, 'stopword_list.txt')
@@ -37,32 +40,20 @@ def train_tfidf_vectorizer(data_path, corpora_data_path, vectorizer_path, csv_na
     f.close()
 
 
-def load_all_available_corpora(csv_name_format, data_path):
-    available_corpora = []
-    for corpus_type in CorpusType:
-        csv_name = csv_name_format.format(corpus_type.value)
-        csv_path = os.path.join(data_path, csv_name)
-
-        if os.path.isfile(csv_path):
-            available_corpora.append({'csv_path': csv_path})
-
+def load_all_available_corpora(data_path, csv_name_format, request_vector_name_format):
+    available_corpora = get_available_corpora(data_path, csv_name_format, request_vector_name_format)
     print('Found {} Corp{} {}.'.format(len(available_corpora),
                                        'ora' if len(available_corpora) != 1 else 'us',
                                        [os.path.basename(corpus['csv_path']) for corpus in available_corpora]))
-
-    # load corpora and request vectors
-    rr_pairs = pd.DataFrame()
-    for corpus in tqdm(available_corpora, unit='Corpora', desc='Load all Corpora'):
-        rr = pd.read_csv(corpus['csv_path'], encoding='utf-8')
-        rr_pairs = pd.concat([rr_pairs, rr.astype(str)], ignore_index=True)
-
-    return rr_pairs
+    return load_corpora_csvs(available_corpora)
 
 
 if __name__ == "__main__":
     # setup argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('--data_path', type=str, default=os.path.join(os.getcwd(), 'Data'), required=False)
+    parser.add_argument('--keep_prior_data', action='store_true',
+                        help='Does not delete previously preprocessed data. Not recommended!')
     parser.add_argument('--use_preset', action='store_true', help='Preprocesses the Preset Corpora set by developer.')
     parser.add_argument('--with_all', action='store_true', help='Preprocess all types of corpora.')
     parser.add_argument('--with_got', action='store_true', help='Preprocess the got transcripts.')
@@ -79,16 +70,20 @@ if __name__ == "__main__":
     word_blacklist_file = os.path.join(args.data_path, 'word_blacklist.txt')
     word_blacklist_file = word_blacklist_file if os.path.isfile(word_blacklist_file) else None
 
-    # delete files from prior run
-    files_patterns = [csv_filename_format.format('*'), request_vector_filename_format.format('*')]
-    files = files_in_directory(corpora_path, file_patterns=files_patterns, recursive=False)
-    for file in files:
-        os.remove(file)
+    # delete files from previous run
+    if not args.keep_prior_data:
+        files_patterns = [csv_filename_format.format('*'), request_vector_filename_format.format('*')]
+        files = files_in_directory(corpora_path, file_patterns=files_patterns, recursive=False)
+        for file in files:
+            os.remove(file)
 
     # create necessary objects
     if not spacy.util.is_package("en_core_web_lg"):
         spacy.cli.download("en_core_web_lg")
     nlp_model = spacy.load("en_core_web_lg")
+    ruler = nlp_model.add_pipe("entity_ruler")
+    patterns = read_jsonfile(os.path.normpath(args.data_path + '/entity_ruler_patterns.json'))
+    ruler.add_patterns(patterns)
 
     word_blacklist_regex = get_word_blacklist_regex(word_blacklist_file)
 

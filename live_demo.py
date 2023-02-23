@@ -6,11 +6,11 @@ from typing import List
 
 from model.patternbased_chatbot import PatternBasedChatbot
 from model.spacy_chatbot import SpacyChatbot
-from model.ner import print_ner, substitute_ne, substitute_ne_answer
+from model.ner import print_ner, substitute_named_entities, substitute_ne_answer
 
 
 def compute_reply(message: str, conversation: List[Message]=None):
-    modified_message = substitute_ne(message)
+    modified_message = substitute_named_entities(message)
     lower_modified_message = modified_message.lower()
 
     # define reply

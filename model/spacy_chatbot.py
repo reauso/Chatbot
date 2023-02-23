@@ -2,12 +2,9 @@ import os
 import pickle
 
 import numpy as np
-import pandas as pd
 import spacy
-from tqdm import tqdm
-from sklearn.feature_extraction.text import TfidfVectorizer
 
-from data_handling.util import CorpusType
+from data_handling.util import get_available_corpora, load_corpora_csvs, load_spacy_vectors
 
 
 class SpacyChatbot:
@@ -22,46 +19,36 @@ class SpacyChatbot:
         if not spacy.util.is_package(spacy_model):
             spacy.cli.download(spacy_model)
         self.nlp = spacy.load(spacy_model)
+        self.data_path = data_path
+        self.csv_name_format = csv_name_format
+        self.request_vectors_name_format = request_vectors_name_format
 
         # detection of all available corpora
-        available_corpora = []
-        for corpus_type in CorpusType:
-            csv_name = csv_name_format.format(corpus_type.value)
-            request_vectors_name = request_vectors_name_format.format(corpus_type.value)
-            csv_path = os.path.join(data_path, 'Corpora', csv_name)
-            request_vectors_path = os.path.join(data_path, 'Corpora', request_vectors_name)
-
-            if os.path.isfile(csv_path) and os.path.isfile(request_vectors_path):
-                available_corpora.append({'csv_path': csv_path, 'request_vectors_path': request_vectors_path})
-
+        available_corpora = get_available_corpora(self.data_path, self.csv_name_format, self.request_vectors_name_format)
         print('Found {} Corp{} {}.'.format(len(available_corpora),
                                            'ora' if len(available_corpora) != 1 else 'us',
                                            [os.path.basename(corpus['csv_path']) for corpus in available_corpora]))
 
-        # load corpora and request vectors
-        self.rr_pairs = pd.DataFrame()
-        self.spacy_request_vectors = np.empty((0, 300), dtype=float)
-        for corpus in tqdm(available_corpora, unit='Corpora', desc='Load all Corpora'):
-            rr = pd.read_csv(corpus['csv_path'])
-            vectors = np.load(corpus['request_vectors_path'])
-
-            self.rr_pairs = pd.concat([self.rr_pairs, rr.astype(str)], ignore_index=True)
-            self.spacy_request_vectors = np.concatenate([self.spacy_request_vectors, vectors], axis=0)
-
-        # be sure that vector values are not 0
-        self.spacy_request_vectors[np.where(self.spacy_request_vectors == 0)] += 0.0000000001
+        # load corpora and spacy request vectors
+        self.rr_pairs = load_corpora_csvs(available_corpora)
+        self.spacy_request_vectors = load_spacy_vectors(available_corpora)
 
         # load tfidf model
-        tfidf_path = os.path.join(data_path, 'Model', 'tfidf_model.pickle')
+        tfidf_path = os.path.join(self.data_path, 'Model', 'tfidf_model.pickle')
         f = open(tfidf_path, 'rb')
         self.tfidf = pickle.load(f)
         f.close()
 
         # load tfidf vectors
-        tfidf_vectors_path = os.path.join(data_path, 'Corpora', 'tfidf_request_vectors.npy')
+        tfidf_vectors_path = os.path.join(self.data_path, 'Corpora', 'tfidf_request_vectors.npy')
         self.tfidf_request_vectors = np.load(tfidf_vectors_path)
-        for i in range(self.tfidf_request_vectors.shape[0]):
+
+        # be sure that vector values are not 0
+        for i in range(self.spacy_request_vectors.shape[0]):
             zero_indices = np.where(self.spacy_request_vectors[i] == 0)
+            self.spacy_request_vectors[i, zero_indices] += 0.0000000001
+        for i in range(self.tfidf_request_vectors.shape[0]):
+            zero_indices = np.where(self.tfidf_request_vectors[i] == 0)
             self.tfidf_request_vectors[i, zero_indices] += 0.0000000001
 
     def __call__(self, request):

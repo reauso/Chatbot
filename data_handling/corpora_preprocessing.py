@@ -6,7 +6,7 @@ import pandas as pd
 from tqdm import tqdm
 
 from data_handling.util import CorpusType, files_in_directory, download_and_extract_zip_from_url, read_textfile
-from model.ner import substitute_ne
+from model.ner import substitute_named_entities
 
 
 def preprocessing_method_mapping():
@@ -26,7 +26,7 @@ def compute_request_vectors(rr_pairs, nlp, name=''):
 
     # define pipeline
     pipeline = nlp.pipe(rr_pairs.request, disable=disabled_pipes, n_process=4, batch_size=1)
-    tqdm_desc = '{}: Convert into NLP Vectors'.format(name)
+    tqdm_desc = '{}: Convert Requests into NLP Vectors'.format(name)
     pipeline = tqdm(pipeline, total=len(rr_pairs.request), unit='Requests', desc=tqdm_desc)
 
     # apply pipeline
@@ -44,6 +44,11 @@ def save_csv_and_vectors(rr_pairs, csv_path, request_vectors_path, nlp, name):
     # compute request vectors and save them
     request_vectors = compute_request_vectors(rr_pairs, nlp, name)
     np.save(request_vectors_path, request_vectors)
+
+
+def process_rr_pair(rr_pairs, csv_path, request_vectors_path, nlp, name):
+    rr_pairs = substitute_named_entities(rr_pairs, nlp, name)
+    save_csv_and_vectors(rr_pairs, csv_path, request_vectors_path, nlp, name)
 
 
 def preprocess_got_transcripts(data_path, nlp, blacklist_regex, csv_name_format, request_vectors_name_format):
@@ -71,10 +76,10 @@ def preprocess_got_transcripts(data_path, nlp, blacklist_regex, csv_name_format,
 
         for pair in rr_tuples:
 
-            rr_series = pd.DataFrame({'request': [substitute_ne(pair[0].lower())], 'reply': [pair[1]]})
+            rr_series = pd.DataFrame({'request': [pair[0].lower()], 'reply': [pair[1]]})
             rr_pairs = pd.concat([rr_pairs, rr_series], ignore_index=True)
 
-    save_csv_and_vectors(rr_pairs, csv_path, request_vectors_path, nlp, name)
+    process_rr_pair(rr_pairs, csv_path, request_vectors_path, nlp, name)
 
 
 def process_convokit_corpus(data_path, nlp, blacklist_regex, corpus_type, download_name, csv_name_format, request_vectors_name_format):
@@ -103,7 +108,7 @@ def process_convokit_corpus(data_path, nlp, blacklist_regex, corpus_type, downlo
             rr_series = pd.DataFrame({'request': [request.text.lower()], 'reply': [reply.text]})
             rr_pairs = pd.concat([rr_pairs, rr_series], ignore_index=True)
 
-    save_csv_and_vectors(rr_pairs, csv_path, request_vectors_path, nlp, name)
+    process_rr_pair(rr_pairs, csv_path, request_vectors_path, nlp, name)
 
 
 def preprocess_cornell_movie_dialogs(data_path, nlp, blacklist_regex, csv_name_format, request_vectors_name_format):
@@ -158,4 +163,4 @@ def preprocess_daily_dialogs(data_path, nlp, blacklist_regex, csv_name_format, r
             rr_series = pd.DataFrame({'request': [request], 'reply': [response]})
             rr_pairs = pd.concat([rr_pairs, rr_series], ignore_index=True)
 
-    save_csv_and_vectors(rr_pairs, csv_path, request_vectors_path, nlp, name)
+    process_rr_pair(rr_pairs, csv_path, request_vectors_path, nlp, name)

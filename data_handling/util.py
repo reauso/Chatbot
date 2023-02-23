@@ -6,8 +6,12 @@ import re
 import zipfile
 from enum import Enum
 from io import BytesIO
+from typing import List
 
+import numpy as np
+import pandas as pd
 import requests
+from tqdm import tqdm
 
 
 class CorpusType(Enum):
@@ -80,3 +84,42 @@ def get_word_blacklist_regex(blacklist_file):
     regex = re.compile(regex)
 
     return regex
+
+
+def get_available_corpora(data_path, csv_name_format, request_vectors_name_format):
+    available_corpora = []
+    for corpus_type in CorpusType:
+        csv_name = csv_name_format.format(corpus_type.value)
+        request_vectors_name = request_vectors_name_format.format(corpus_type.value)
+        csv_path = os.path.join(data_path, 'Corpora', csv_name)
+        request_vectors_path = os.path.join(data_path, 'Corpora', request_vectors_name)
+
+        if os.path.isfile(csv_path) and os.path.isfile(request_vectors_path):
+            available_corpora.append({'csv_path': csv_path, 'request_vectors_path': request_vectors_path})
+
+    return available_corpora
+
+
+def load_corpora_csvs(corpora_types: List[CorpusType]):
+    # load corpora
+    rr_pairs = pd.DataFrame()
+    for corpus in tqdm(corpora_types, unit='Corpora', desc='Load Corpora'):
+        rr = pd.read_csv(corpus['csv_path'], encoding='utf-8')
+        rr_pairs = pd.concat([rr_pairs, rr.astype(str)], ignore_index=True)
+
+    return rr_pairs
+
+
+def load_spacy_vectors(corpora_types: List[CorpusType]):
+    # load spacy request vectors
+    spacy_request_vectors = np.empty((0, 300), dtype=float)
+    for corpus in tqdm(corpora_types, unit='Corpora', desc='Load all Corpora'):
+        vectors = np.load(corpus['request_vectors_path'])
+        spacy_request_vectors = np.concatenate([spacy_request_vectors, vectors], axis=0)
+
+    return spacy_request_vectors
+
+
+def multi_replace(text, replacement_dict):
+    pattern = re.compile("|".join(replacement_dict.keys()))
+    return pattern.sub(lambda m: replacement_dict[re.escape(m.group(0))], text)
