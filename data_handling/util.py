@@ -113,7 +113,7 @@ def load_corpora_csvs(corpora_types: List[CorpusType]):
 def load_spacy_vectors(corpora_types: List[CorpusType]):
     # load spacy request vectors
     spacy_request_vectors = np.empty((0, 300), dtype=float)
-    for corpus in tqdm(corpora_types, unit='Corpora', desc='Load all Corpora'):
+    for corpus in tqdm(corpora_types, unit='Corpora', desc='Load Spacy Vectors'):
         vectors = np.load(corpus['request_vectors_path'])
         spacy_request_vectors = np.concatenate([spacy_request_vectors, vectors], axis=0)
 
@@ -121,5 +121,8 @@ def load_spacy_vectors(corpora_types: List[CorpusType]):
 
 
 def multi_replace(text, replacement_dict):
+    if len(replacement_dict) == 0:
+        return text
+
     pattern = re.compile("|".join(replacement_dict.keys()))
     return pattern.sub(lambda m: replacement_dict[re.escape(m.group(0))], text)

@@ -4,7 +4,8 @@ import pickle
 import numpy as np
 import spacy
 
-from data_handling.util import get_available_corpora, load_corpora_csvs, load_spacy_vectors
+from data_handling.util import get_available_corpora, load_corpora_csvs, load_spacy_vectors, read_jsonfile
+from model.ner import NER
 
 
 class SpacyChatbot:
@@ -22,6 +23,12 @@ class SpacyChatbot:
         self.data_path = data_path
         self.csv_name_format = csv_name_format
         self.request_vectors_name_format = request_vectors_name_format
+        self.ner = NER(self.nlp)
+
+        # add ruler to nlp for entity recognition
+        ruler = self.nlp.add_pipe("entity_ruler")
+        patterns = read_jsonfile(os.path.normpath(self.data_path + '/entity_ruler_patterns.json'))
+        ruler.add_patterns(patterns)
 
         # detection of all available corpora
         available_corpora = get_available_corpora(self.data_path, self.csv_name_format, self.request_vectors_name_format)
@@ -52,24 +59,31 @@ class SpacyChatbot:
             self.tfidf_request_vectors[i, zero_indices] += 0.0000000001
 
     def __call__(self, request):
-        spacy_request_doc = self.nlp(request)
-        spacy_request_vector = spacy_request_doc.vector
+        original_request_doc = self.nlp(request)
+
+        substituted_request = self.ner.substitute_named_entity_in_doc(original_request_doc).lower()
+        substituted_request_doc = self.nlp(substituted_request)
+
+        spacy_request_vector = substituted_request_doc.vector
 
         spacy_similarities = self.database_cosine_similarities(spacy_request_vector, 'spacy')
         spacy_best_index = np.argmax(spacy_similarities)
         #print(self.rr_pairs.loc[spacy_best_index, 'request'])
 
-        tfidf_request_vector = self.tfidf.transform([request]).toarray()
+        tfidf_request_vector = self.tfidf.transform([request.lower()]).toarray()
         tfidf_request_vector = tfidf_request_vector.reshape(tfidf_request_vector.shape[1])
         tfidf_similarity = self.database_cosine_similarities(tfidf_request_vector, 'tfidf')
         tfidf_best_index = np.argmax(tfidf_similarity)
 
-        print('spacy: {}'.format(spacy_similarities[spacy_best_index]))
-        print('tfidf: {}'.format(tfidf_similarity[tfidf_best_index]))
-        print('spacy: {}'.format(self.rr_pairs.loc[spacy_best_index, 'reply']))
-        print('tfidf: {}'.format(self.rr_pairs.loc[tfidf_best_index, 'reply']))
+        #print('spacy: {}'.format(spacy_similarities[spacy_best_index]))
+        #print('tfidf: {}'.format(tfidf_similarity[tfidf_best_index]))
+        #print('spacy: {}'.format(self.rr_pairs.loc[spacy_best_index, 'reply']))
+        #print('tfidf: {}'.format(self.rr_pairs.loc[tfidf_best_index, 'reply']))
 
-        return self.rr_pairs.loc[spacy_best_index, 'reply'], spacy_similarities[spacy_best_index]
+        reply = self.rr_pairs.loc[spacy_best_index, 'reply']
+        reply = self.ner.replace_entities(original_request_doc, reply)
+
+        return reply, spacy_similarities[spacy_best_index]
 
     def database_cosine_similarities(self, request_vector, type):
         database = self.spacy_request_vectors if type == 'spacy' else self.tfidf_request_vectors
@@ -86,19 +100,15 @@ if __name__ == "__main__":
 
     model = SpacyChatbot()
     example_request = [
-        'Did you hear the king’s in Winterfell?',
-        'Hello',
-        'What are you doing',
-        'Do you like cats?',
-        'Do you have a cat?',
-        'yes',
-        'Yes',
-        'no',
-        'What do you think of Tyrion?',
+        #'Did you hear the king’s in Winterfell?',
+        #'What do you think of Tyrion?',
+        'both Winterfell have taken up against us. Tyrion captured, his armies scattered. it\'s a catastrophe. perhaps we should sue for peace.',
+        'both armies have taken up against us. Tyrion captured, his armies scattered. it\'s a catastrophe. perhaps we should sue for peace.',
+        'you wouldn\'t know him.',
     ]
 
     for request in example_request:
-        request = request.lower()
+        request = request
         start = time.time()
         reply, similarity = model(request)
         end = time.time()
