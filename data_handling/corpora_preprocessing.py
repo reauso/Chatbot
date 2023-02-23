@@ -142,7 +142,7 @@ def preprocess_daily_dialogs(data_path, nlp, blacklist_regex, csv_name_format, r
 
     # Process into request-response pairs in DataFrame
     rr_pairs = pd.DataFrame({'request': [], 'reply': []})
-    pipeline = tqdm(dialog, unit='Dialogs', desc='Process Dialogs')
+    pipeline = tqdm(dialog, unit='Dialogs', desc='{}: Process Dialogs'.format(name))
     for dialog_entry in pipeline:
         for i in range(1, len(dialog_entry)):
             pipeline.set_postfix_str('Process dialog line {} / {}'.format(i, len(dialog_entry) - 1))
