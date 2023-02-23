@@ -9,7 +9,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from tqdm import tqdm
 
 from data_handling.corpora_preprocessing import preprocessing_method_mapping
-from data_handling.util import CorpusType, get_word_blacklist_regex, read_textfile
+from data_handling.util import CorpusType, get_word_blacklist_regex, read_textfile, files_in_directory
 
 
 def train_tfidf_vectorizer(data_path, corpora_data_path, vectorizer_path, csv_name_format, request_vector_name_format):
@@ -63,6 +63,7 @@ if __name__ == "__main__":
     # setup argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('--data_path', type=str, default=os.path.join(os.getcwd(), 'Data'), required=False)
+    parser.add_argument('--use_preset', action='store_true', help='Preprocesses the Preset Corpora set by developer.')
     parser.add_argument('--with_all', action='store_true', help='Preprocess all types of corpora.')
     parser.add_argument('--with_got', action='store_true', help='Preprocess the got transcripts.')
     parser.add_argument('--with_cornell', action='store_true', help='Preprocess the cornell movie-dialogs corpus.')
@@ -77,6 +78,12 @@ if __name__ == "__main__":
     request_vector_filename_format = '{}_request_vectors.npy'
     word_blacklist_file = os.path.join(args.data_path, 'word_blacklist.txt')
     word_blacklist_file = word_blacklist_file if os.path.isfile(word_blacklist_file) else None
+
+    # delete files from prior run
+    files_patterns = [csv_filename_format.format('*'), request_vector_filename_format.format('*')]
+    files = files_in_directory(corpora_path, file_patterns=files_patterns, recursive=False)
+    for file in files:
+        os.remove(file)
 
     # create necessary objects
     if not spacy.util.is_package("en_core_web_lg"):
@@ -95,6 +102,9 @@ if __name__ == "__main__":
         all_preprocessing_types.append(CorpusType.Parliament)
     if args.with_daily or args.with_all:
         all_preprocessing_types.append(CorpusType.DailyDialogs)
+
+    if args.use_preset:
+        all_preprocessing_types = [CorpusType.GoT, CorpusType.Cornell, CorpusType.DailyDialogs]
 
     # convert to preprocess methods (callable)
     mapping = preprocessing_method_mapping()
