@@ -56,7 +56,7 @@ You can start the Tyrion chatbot by executing the following command:
 python live_demo.py
 ```
 
-The chatbot will ask if you want to connect to establish a connection to the other chatbots or if you want to use the normal chatting mode. After entering 'yes' or 'no' you are redy to go!
+The chatbot will ask if you want to connect to establish a connection to the other chatbots or if you want to use the normal chatting mode. After entering 'yes' or 'no' you are **ready to go**!
 
 
 
