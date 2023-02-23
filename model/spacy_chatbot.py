@@ -68,17 +68,18 @@ class SpacyChatbot:
 
         spacy_similarities = self.database_cosine_similarities(spacy_request_vector, 'spacy')
         spacy_best_index = np.argmax(spacy_similarities)
-        #print(self.rr_pairs.loc[spacy_best_index, 'request'])
 
-        tfidf_request_vector = self.tfidf.transform([request.lower()]).toarray()
+        '''tfidf_request_vector = self.tfidf.transform([request.lower()]).toarray()
         tfidf_request_vector = tfidf_request_vector.reshape(tfidf_request_vector.shape[1])
         tfidf_similarity = self.database_cosine_similarities(tfidf_request_vector, 'tfidf')
-        tfidf_best_index = np.argmax(tfidf_similarity)
+        tfidf_best_index = np.argmax(tfidf_similarity)'''
 
-        #print('spacy: {}'.format(spacy_similarities[spacy_best_index]))
-        #print('tfidf: {}'.format(tfidf_similarity[tfidf_best_index]))
-        #print('spacy: {}'.format(self.rr_pairs.loc[spacy_best_index, 'reply']))
-        #print('tfidf: {}'.format(self.rr_pairs.loc[tfidf_best_index, 'reply']))
+        '''print('spacy: {}'.format(spacy_similarities[spacy_best_index]))
+        print('tfidf: {}'.format(tfidf_similarity[tfidf_best_index]))
+        print('spacy request: {}'.format(self.rr_pairs.loc[spacy_best_index, 'request']))
+        print('tfidf request: {}'.format(self.rr_pairs.loc[tfidf_best_index, 'request']))
+        print('spacy reply: {}'.format(self.rr_pairs.loc[spacy_best_index, 'reply']))
+        print('tfidf reply: {}'.format(self.rr_pairs.loc[tfidf_best_index, 'reply']))'''
 
         reply = self.rr_pairs.loc[spacy_best_index, 'reply']
         reply = self.ner.replace_entities(original_request_doc, reply)
@@ -105,11 +106,18 @@ if __name__ == "__main__":
         'both Winterfell have taken up against us. Tyrion captured, his armies scattered. it\'s a catastrophe. perhaps we should sue for peace.',
         'both armies have taken up against us. Tyrion captured, his armies scattered. it\'s a catastrophe. perhaps we should sue for peace.',
         'you wouldn\'t know him.',
+        'Hi',
+        'What are you doing',
+        'Do you like cats?',
+        'What are your hobbies?',
     ]
 
     for request in example_request:
         request = request
+        print('request: {}'.format(request))
         start = time.time()
         reply, similarity = model(request)
         end = time.time()
-        print('sec: {:.2f}, sim: {:.4f}, request: {}, reply: {}'.format(end - start, similarity, request, reply))
+        print('reply: {}'.format(reply))
+        print('sec: {:.2f}, sim: {:.4f}'.format(end - start, similarity))
+        print('--------------------------------------------------------')
