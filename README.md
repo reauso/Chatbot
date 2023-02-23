@@ -39,7 +39,7 @@ You can choose different configurations for the preprocessing. Here is a list of
 
 | Argument | Explanation |
 | - | - |
-| `--data_path` |  |
+| `--data_path` | Path to data dir. |
 | `--keep_prior_data` | Does not delete previously preprocessed data. |
 | `--use_preset` | Preprocesses the Preset Corpora set by developer. |
 | `--with_all` | Preprocess all types of corpora. |
