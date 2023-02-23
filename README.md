@@ -2,7 +2,7 @@
 This chatbot (sometimes) has the personality of Tyrion Lannister from Game of Thrones. He is a witty, intelligent and zynical dwarf and one of the main characters of the show. He likes to have a drink or two, but you might figure that out for yourself.
 
 ## Data
-The Tyrion Lannister chatbot is based on the following corpora:
+The Tyrion Lannister chatbot is based on the following corpora with request-reply pairs:
 - ~ 1.300 [Tyrions dialogs from the tv show](https://genius.com/artists/Game-of-thrones)
 - ~ 210.000 [cornell movie-dialogs corpus](https://convokit.cornell.edu/documentation/movie.html)
 - ~ 86.000 [daily-dialogs](http://yanran.li/dailydialog.html)
