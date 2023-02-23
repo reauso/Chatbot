@@ -51,7 +51,7 @@ def substitute_named_entity_in_text(text, nlp):
     return substitute_named_entity_in_doc(nlp(text))
 
 
-def substitute_named_entities(rr_pairs, nlp, name=''):
+def substitute_named_entities_in_rr_pairs(rr_pairs, nlp, name=''):
     rr_pairs.request = substitute_named_entities_in_series(rr_pairs.request, nlp, name, ' Request')
     rr_pairs.reply = substitute_named_entities_in_series(rr_pairs.reply, nlp, name, ' Reply')
 

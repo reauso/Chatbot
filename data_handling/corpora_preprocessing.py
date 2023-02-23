@@ -6,7 +6,7 @@ import pandas as pd
 from tqdm import tqdm
 
 from data_handling.util import CorpusType, files_in_directory, download_and_extract_zip_from_url, read_textfile
-from model.ner import substitute_named_entities
+from model.ner import substitute_named_entities_in_rr_pairs
 
 
 def preprocessing_method_mapping():
@@ -47,7 +47,7 @@ def save_csv_and_vectors(rr_pairs, csv_path, request_vectors_path, nlp, name):
 
 
 def process_rr_pair(rr_pairs, csv_path, request_vectors_path, nlp, name):
-    rr_pairs = substitute_named_entities(rr_pairs, nlp, name)
+    rr_pairs = substitute_named_entities_in_rr_pairs(rr_pairs, nlp, name)
     save_csv_and_vectors(rr_pairs, csv_path, request_vectors_path, nlp, name)
 
 
