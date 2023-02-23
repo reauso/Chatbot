@@ -10,14 +10,20 @@ from data_handling.util import read_jsonfile, multi_replace
 class NER:
     def __init__(self, nlp, pattern_path=os.path.normpath(os.getcwd() + '/Data/entity_ruler_patterns.json')):
         self.nlp = nlp
-        self.patterns = read_jsonfile(pattern_path)
-        self.entity_string_labels = list(set([pattern['label'] for pattern in self.patterns]))
+        patterns = read_jsonfile(pattern_path)
+        self.entity_string_labels = list(set([pattern['label'] for pattern in patterns]))
 
         # get known entities from patterns
         self.known_entities = {label: [] for label in self.entity_string_labels}
-        for pattern in self.patterns:
+        for pattern in patterns:
             if pattern['label'] in self.entity_string_labels:
                 self.known_entities[pattern['label']].append(pattern['pattern'])
+
+    def add_entity(self, label, name):
+        if label not in self.entity_string_labels:
+            raise ValueError('Unknown Label: {}. Valid Labels are: {}'.format(label, self.entity_string_labels))
+
+        self.known_entities[label].append(name)
 
     def replace_entities(self, request_doc, reply):
         request_entities = [ent for ent in request_doc.ents if ent.label_ in self.entity_string_labels]

@@ -26,9 +26,9 @@ class SpacyChatbot:
         self.ner = NER(self.nlp)
 
         # add ruler to nlp for entity recognition
-        ruler = self.nlp.add_pipe("entity_ruler")
+        self.ruler = self.nlp.add_pipe("entity_ruler")
         patterns = read_jsonfile(os.path.normpath(self.data_path + '/entity_ruler_patterns.json'))
-        ruler.add_patterns(patterns)
+        self.ruler.add_patterns(patterns)
 
         # detection of all available corpora
         available_corpora = get_available_corpora(self.data_path, self.csv_name_format, self.request_vectors_name_format)
@@ -57,6 +57,10 @@ class SpacyChatbot:
         for i in range(self.tfidf_request_vectors.shape[0]):
             zero_indices = np.where(self.tfidf_request_vectors[i] == 0)
             self.tfidf_request_vectors[i, zero_indices] += 0.0000000001
+
+    def add_known_person(self, name):
+        self.ruler.add_patterns([{'label': 'PERSON', 'pattern': name}])
+        self.ner.add_entity(label='PERSON', name=name)
 
     def __call__(self, request):
         original_request_doc = self.nlp(request)
@@ -121,3 +125,4 @@ if __name__ == "__main__":
         print('reply: {}'.format(reply))
         print('sec: {:.2f}, sim: {:.4f}'.format(end - start, similarity))
         print('--------------------------------------------------------')
+

@@ -3,10 +3,8 @@ import os
 import pickle
 
 import numpy as np
-import pandas as pd
 import spacy
 from sklearn.feature_extraction.text import TfidfVectorizer
-from tqdm import tqdm
 
 from data_handling.corpora_preprocessing import preprocessing_method_mapping
 from data_handling.util import CorpusType, get_word_blacklist_regex, read_textfile, files_in_directory, \
@@ -16,7 +14,7 @@ from data_handling.util import CorpusType, get_word_blacklist_regex, read_textfi
 def train_tfidf_vectorizer(data_path, corpora_data_path, vectorizer_path, csv_name_format, request_vector_name_format):
     print('Train TFIDF Model and save TFIDF Corpora Vectors')
 
-    rr_pairs = load_all_available_corpora(corpora_data_path, csv_name_format, request_vector_name_format)
+    rr_pairs = load_all_available_corpora(data_path, csv_name_format, request_vector_name_format)
 
     # load stopword list
     stop_word_file = os.path.join(data_path, 'stopword_list.txt')
