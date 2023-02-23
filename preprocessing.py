@@ -49,9 +49,10 @@ def load_all_available_corpora(data_path, csv_name_format, request_vector_name_f
 if __name__ == "__main__":
     # setup argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data_path', type=str, default=os.path.join(os.getcwd(), 'Data'), required=False)
+    parser.add_argument('--data_path', type=str, default=os.path.join(os.getcwd(), 'Data'), required=False,
+                        dest='Path to data dir.')
     parser.add_argument('--keep_prior_data', action='store_true',
-                        help='Does not delete previously preprocessed data. Not recommended!')
+                        help='Does not delete previously preprocessed data.')
     parser.add_argument('--use_preset', action='store_true', help='Preprocesses the Preset Corpora set by developer.')
     parser.add_argument('--with_all', action='store_true', help='Preprocess all types of corpora.')
     parser.add_argument('--with_got', action='store_true', help='Preprocess the got transcripts.')
