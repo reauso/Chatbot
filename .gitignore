@@ -131,5 +131,6 @@ dmypy.json
 # pycharm
 .idea
 Data/Corpora
+/Data/Model/
 !Data/Corpora/GotTranscripts
 temp*.py
