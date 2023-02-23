@@ -51,10 +51,10 @@ def substitute_ne_answer(message: str, answer: str):
                         replaced = True
                 if not replaced:
                     answer.replace(ent.text, 'TODO JSON')
-            elif ent.label_ == 'LOC':
+            elif ent.label_ == 'LOC' or ent.label_ == 'GPE':
                 replaced = False
                 for message_ent in doc_message.ents:
-                    if message_ent.label_ == 'LOC':
+                    if message_ent.label_ == 'LOC' or message_ent.label_ == 'GPE':
                         answer.replace(ent.text, message_ent.text)
                     replaced = True
                 if not replaced:

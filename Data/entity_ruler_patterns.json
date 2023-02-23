@@ -516,167 +516,275 @@
     "pattern": "Giantsbane"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "King's Landing"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Winterfell"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Braavos"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Pentos"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Volantis"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Oldtown"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Dorne"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Meereen"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Astapor"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Qarth"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Yunkai"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Lannisport"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Dragonstone"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Casterly Rock"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Highgarden"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "The Eyrie"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Sunspear"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "White Harbor"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Harrenhal"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Pyke"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Storm's End"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Riverrun"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Starfall"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Shadow Tower"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Last Hearth"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Horn Hill"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Karhold"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "The Twins"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Bear Island"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Fair Isle"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Goldroad"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "The Dreadfort"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Blackwater Bay"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "The Nightfort"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Moat Cailin"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Greywater Watch"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "The Dreadfort"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Riverrun"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Oldtown"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "The Citadel"
   },
   {
-    "label": "GPE",
+    "label": "LOC",
     "pattern": "Winterfell"
+  },
+  {
+    "label": "ORG",
+    "pattern": "Iron Bank"
+  },
+  {
+    "label": "ORG",
+    "pattern": "Golden Company"
+  },
+  {
+    "label": "ORG",
+    "pattern": "Faceless Men"
+  },
+  {
+    "label": "ORG",
+    "pattern": "Night's Watch"
+  },
+  {
+    "label": "ORG",
+    "pattern": "Kingsguard"
+  },
+  {
+    "label": "ORG",
+    "pattern": "Second Sons"
+  },
+  {
+    "label": "ORG",
+    "pattern": "Brotherhood Without Banners"
+  },
+  {
+    "label": "ORG",
+    "pattern": "The Unsullied"
+  },
+  {
+    "label": "ORG",
+    "pattern": "The Dothraki"
+  },
+  {
+    "label": "ORG",
+    "pattern": "Faith of the Seven"
+  },
+  {
+    "label": "PRODUCT",
+    "pattern": "Wildfire"
+  },
+  {
+    "label": "PRODUCT",
+    "pattern": "Valyrian steel"
+  },
+  {
+    "label": "PRODUCT",
+    "pattern": "Dragonglass"
+  },
+  {
+    "label": "PRODUCT",
+    "pattern": "Milk of the poppy"
+  },
+  {
+    "label": "PRODUCT",
+    "pattern": "Arbor gold"
+  },
+  {
+    "label": "PRODUCT",
+    "pattern": "Dornish wine"
+  },
+  {
+    "label": "PRODUCT",
+    "pattern": "Weirwood arrows"
+  },
+  {
+    "label": "PRODUCT",
+    "pattern": "Essos silk"
+  },
+  {
+    "label": "PRODUCT",
+    "pattern": "Myrish lenses"
+  },
+  {
+    "label": "MONEY",
+    "pattern": "Gold dragons"
+  },
+  {
+    "label": "MONEY",
+    "pattern": "Silver stags"
+  },
+  {
+    "label": "MONEY",
+    "pattern": "Copper pennies"
+  },
+  {
+    "label": "MONEY",
+    "pattern": "Iron coins"
+  },
+  {
+    "label": "MONEY",
+    "pattern": "Braavosi iron bank notes"
+  },
+  {
+    "label": "MONEY",
+    "pattern": "Lannister gold"
+  },
+  {
+    "label": "MONEY",
+    "pattern": "Tyrell roses"
+  },
+  {
+    "label": "MONEY",
+    "pattern": "Ironborn krakens"
   }
 ]
