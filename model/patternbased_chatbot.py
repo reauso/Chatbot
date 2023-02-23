@@ -3,6 +3,7 @@ import re
 
 from data_handling.reflection import reflect
 from data_handling.util import read_jsonfile
+from memory import add_user_name
 
 
 class PatternBasedChatbot:
@@ -15,6 +16,8 @@ class PatternBasedChatbot:
             match = re.search(pattern.lower(), str(request).lower().strip())
             if match:
                 answer = random.choice(responses)
+                if re.search("(my name is|I,'m)\\s+(.*)\\s*\\.?", str(request).lower().strip()):
+                    add_user_name(re.sub("(my name is|I,'m)\\s+(.*)\\s*\\.?", '', request))
                 return answer.format(*[reflect(g.strip(",.?!")) for g in match.groups()])
 
         return None
