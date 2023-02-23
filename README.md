@@ -57,7 +57,7 @@ python live_demo.py
 ```
 
 The chatbot will ask if you want to connect to establish a connection to the other chatbots or if you want to use the normal chatting mode. 
-In order to connect to the other chabots, you'll need to set up a moderator chatbot. Therefor refence the [chatbotsclient repository](https://github.com/Robstei/chatbotsclient) and follow the instructions.
+In order to connect to the other chabots, you'll need to set up a moderator chatbot. Therefor reference the [chatbotsclient repository](https://github.com/Robstei/chatbotsclient) and follow the instructions.
 After entering 'yes' or 'no' you are **ready to go**!
 
 
