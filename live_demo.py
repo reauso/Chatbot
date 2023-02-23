@@ -6,24 +6,28 @@ from typing import List
 
 from model.patternbased_chatbot import PatternBasedChatbot
 from model.spacy_chatbot import SpacyChatbot
-from model.ner import print_ner
+from model.ner import print_ner, substitute_ne, substitute_ne_answer
 
 
 def compute_reply(message: str, conversation: List[Message]=None):
-    lower_message = message.lower()
+    modified_message = substitute_ne(message)
+    lower_modified_message = modified_message.lower()
 
     # define reply
     reply = {}
 
-    # Corpus based chatbot reply
-    reply['corpus'], similarity = corpus_based(lower_message)
-
     # template based chatbot reply
-    reply['pattern'] = patter_based(message)
+    reply['pattern'] = patter_based(modified_message)
+
+    # Corpus based chatbot reply
+    reply['corpus'], similarity = corpus_based(lower_modified_message)
 
     # default reply
     if similarity < 0.5:
         reply['default'] = 'Sorry but I don`t know what you mean.'
+
+    # reply['corpus'] =
+    substitute_ne_answer(message, reply['corpus'])
 
     return reply
 

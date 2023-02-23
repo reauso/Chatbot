@@ -6,6 +6,7 @@ import pandas as pd
 from tqdm import tqdm
 
 from data_handling.util import CorpusType, files_in_directory, download_and_extract_zip_from_url, read_textfile
+from model.ner import substitute_ne
 
 
 def preprocessing_method_mapping():
@@ -69,7 +70,8 @@ def preprocess_got_transcripts(data_path, nlp, blacklist_regex, csv_name_format,
         rr_tuples = [pair for pair in rr_tuples if blacklist_regex.search(pair[1]) is None]
 
         for pair in rr_tuples:
-            rr_series = pd.DataFrame({'request': [pair[0].lower()], 'reply': [pair[1]]})
+
+            rr_series = pd.DataFrame({'request': [substitute_ne(pair[0].lower())], 'reply': [pair[1]]})
             rr_pairs = pd.concat([rr_pairs, rr_series], ignore_index=True)
 
     save_csv_and_vectors(rr_pairs, csv_path, request_vectors_path, nlp, name)
