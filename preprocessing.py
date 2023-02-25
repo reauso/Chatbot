@@ -50,7 +50,7 @@ if __name__ == "__main__":
     # setup argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('--data_path', type=str, default=os.path.join(os.getcwd(), 'Data'), required=False,
-                        dest='Path to data dir.')
+                        help='Path to data dir.')
     parser.add_argument('--keep_prior_data', action='store_true',
                         help='Does not delete previously preprocessed data.')
     parser.add_argument('--use_preset', action='store_true', help='Preprocesses the Preset Corpora set by developer.')
