@@ -64,12 +64,15 @@ After entering 'yes' or 'no' you are **ready to go**!
 
 This Chatbot uses two kinds of Chatbots to generate a reply for a request. The first kind is a pattern based Chatbot which uses regex to find a match in a Pattern Database. The Database usually contains multiple replies for a pattern and chooses it randomly. The second kind is a corpus based Chatbot which compares a given request to a corpus. Then the corpus based chatbot uses the most similar request in its corpus to determine the reply. We also use substitution of named entities in our corpus based Chatbot.
 
-We utilize two patten based Chatbots (one specialized and one universal) in the process of generating a reply. The specialized Chatbot uses pattern which are specific for manually selected Scenarios so that out Chatbot behaves in a certain way which we specified.
-
-A visualization of our two kinds of Chatbots and of our decision making is given in the following:
+We utilize two patten based Chatbots (one specialized and one universal) in the process of generating a reply. The specialized Chatbot uses pattern which are specific for manually selected Scenarios so that out Chatbot behaves in a certain way which we specified. The universal pattern based Chatbot uses patterns which are more general but it is only used if the similarity from the corpus based Chatbot is less than 90%.
+The corpus based Chatbot uses the Data described in the Data section of this Readme and determines a reply and a similarity for a given request.
 
 ![Our_Complete_Chatbot](https://user-images.githubusercontent.com/47336789/221637807-6fef7334-1317-4b2c-864b-0917d5564b75.png)
+
+A visualization of our two kinds of Chatbots is given in the following:
+
 ![Our Pattern Based Chatbot](https://user-images.githubusercontent.com/47336789/221637786-b5dd588e-b418-4086-9297-9e478012fd34.png)
+---
 ![Our Corpus Based Chatbot](https://user-images.githubusercontent.com/47336789/221637735-04d42311-17f1-42e4-84db-c460a04b8f88.png)
 
 
