@@ -60,6 +60,17 @@ The chatbot will ask if you want to connect to establish a connection to the oth
 In order to connect to the other chabots, you'll need to set up a moderator chatbot. Therefor reference the [chatbotsclient repository](https://github.com/Robstei/chatbotsclient) and follow the instructions.
 After entering 'yes' or 'no' you are **ready to go**!
 
+## How it works
+
+This Chatbot uses two kinds of Chatbots to generate a reply for a request. The first kind is a pattern based Chatbot which uses regex to find a match in a Pattern Database. The Database usually contains multiple replies for a pattern and chooses it randomly. The second kind is a corpus based Chatbot which compares a given request to a corpus. Then the corpus based chatbot uses the most similar request in its corpus to determine the reply. We also use substitution of named entities in our corpus based Chatbot.
+
+We utilize two patten based Chatbots (one specialized and one universal) in the process of generating a reply. The specialized Chatbot uses pattern which are specific for manually selected Scenarios so that out Chatbot behaves in a certain way which we specified.
+
+A visualization of our two kinds of Chatbots and of our decision making is given in the following:
+
+![Our_Complete_Chatbot](https://user-images.githubusercontent.com/47336789/221637807-6fef7334-1317-4b2c-864b-0917d5564b75.png)
+![Our Pattern Based Chatbot](https://user-images.githubusercontent.com/47336789/221637786-b5dd588e-b418-4086-9297-9e478012fd34.png)
+![Our Corpus Based Chatbot](https://user-images.githubusercontent.com/47336789/221637735-04d42311-17f1-42e4-84db-c460a04b8f88.png)
 
 
 
